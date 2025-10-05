@@ -36,6 +36,8 @@ export default function JobDetails({ job }) {
     console.log(res);
     if (res.ok) {
       navigate(`/jobseeker/applyjob/${encodeURIComponent(job._id)}`);
+    } else if (res.status === 401) {
+      toast.error("Please login or create account to apply for a job");
     } else {
       toast.error("Already Applied");
     }

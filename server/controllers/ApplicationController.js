@@ -50,7 +50,6 @@ exports.checkApplied = async (req, res) => {
   const jobId = req.params.id;
   const userId = req.user.userId;
   const applications = await JobApplication.find({ jobId, userId });
-
   if (applications.length > 0) {
     return res.status(400).json({ message: "Already applied" });
   } else {

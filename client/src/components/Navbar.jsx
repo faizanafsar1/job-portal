@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
-import { faUser, faBookmark, faQuestionCircle, faLock } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faQuestionCircle, faLock, faBriefcase, faBriefcaseClock } from "@fortawesome/free-solid-svg-icons";
 import IconAndLabelBtn from "./IconLabelAndBtn";
+import { useAuth } from "../context/AuthContext";
+import Button from "./Button";
 
 const Header = () => {
+  const { accessToken } = useAuth();
   const navItems = [
     { label: "Profile", path: "/jobseeker/profile", icon: faUser },
     { label: "Help", path: "/help", icon: faQuestionCircle },
     { label: "Privacy Center", path: "/", icon: faLock },
+    { label: "Employers / Post Job", path: "/employer/dashboard", icon: faBriefcase },
   ];
 
   return (
@@ -15,18 +19,23 @@ const Header = () => {
         <Link to={"/"} className="text-xl text-primary-dark font-bold">
           Indeed
         </Link>
-        <div className="flex space-x-4">
+        <div className="flex items-center space-x-4">
           {navItems.map((item, i) => (
-            <Link key={i} to={item.path} className={`rounded-lg transition  hover:bg-primary-light text-white`}>
+            <Link key={i} to={item.path} className={`rounded-lg h-[37px]    hover:bg-primary-light text-white`}>
               <IconAndLabelBtn label={item.label} icon={item.icon} className="px-3 py-2 text-sm" />
             </Link>
           ))}
-          <Link
-            to="/employer/dashboard"
-            className="text-gray-900 hover:text-primary-dark border-b-2 border-transparent  h-fit my-auto hover:border-primary-dark  font-medium"
-          >
-            Employers / Post Job
-          </Link>
+
+          {!accessToken && (
+            <>
+              <Link to={"/login"}>
+                <Button label="login " style={"secondary"} className="px-3 py-2 text-sm" />
+              </Link>
+              <Link to={"/signup"}>
+                <Button label="Signup" style={"primary"} className="px-3 py-2 text-sm" />
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>

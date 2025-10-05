@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const applicationController = require("../controllers/ApplicationController");
-const { verifyToken, isEmployer } = require("../middleware/Auth");
+const { verifyToken } = require("../middleware/Auth");
 
 // // User
 router.post("/apply-job/:id", verifyToken, applicationController.applyToJob);
