@@ -71,9 +71,7 @@ exports.JobApplication = async (req, res) => {
     "userDetails.email": user.email,
   });
   if (existingApplication) {
-    return res
-      .status(400)
-      .send({ message: "You have already applied for this post" });
+    return res.status(400).send({ message: "You have already applied for this post" });
   }
 
   const newJobApplication = new JobApplication({

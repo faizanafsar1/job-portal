@@ -2,16 +2,12 @@ const router = require("express").Router();
 const jobController = require("../controllers/JobController");
 const { verifyToken, requireRole } = require("../middleware/Auth");
 
-// Public
-// router.get("/", jobController.getAllJobs);
-// router.get("/search", jobController.searchJobs); // e.g. /search?title=React
-// router.get("/filter", jobController.filterJobs); // e.g. /filter?location=Lahore
+router.get("/", jobController.getAllJobs);
 router.get("/getjob/:id", jobController.getJobById);
+router.put("/update-job-details/:id", jobController.updateJobDetails);
 
-// // Employer
-// router.post("/", verifyToken, requireRole("employer"), jobController.createJob);
-// router.get("/employer/:id", verifyToken, requireRole("employer"), jobController.getJobsByEmployer);
-// router.put("/:id", verifyToken, requireRole("employer"), jobController.updateJob);
-// router.delete("/:id", verifyToken, requireRole("employer"), jobController.deleteJob);
+router.get("/all-jobs", verifyToken, requireRole("employer"), jobController.getAllJobsForEmployer);
+router.get("/job-details/:id", verifyToken, requireRole("employer"), jobController.getJobDetails);
+router.delete("/delete-job/:id", verifyToken, requireRole("employer"), jobController.deleteJob);
 
 module.exports = router;

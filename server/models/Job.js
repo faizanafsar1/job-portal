@@ -13,5 +13,9 @@ const jobSchema = new mongoose.Schema({
   companyEmail: { type: String, default: "" },
   companyDescription: { type: String, default: "" },
   companyLocation: { type: String, default: "" },
+  jobPostedOn: {
+    type: String,
+    default: () => new Date().toISOString().split("T")[0],
+  },
 });
 module.exports = new mongoose.model("Job", jobSchema);

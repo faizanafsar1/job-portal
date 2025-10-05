@@ -5,15 +5,7 @@ const Employer = require("../models/Employer");
 const { generateAccessToken, generateRefreshToken } = require("../utils/Token");
 
 exports.signup = async (req, res) => {
-  const {
-    role,
-    firstName,
-    lastName,
-    email,
-    contact,
-    password,
-    confirmPassword,
-  } = req.body;
+  const { role, firstName, lastName, email, contact, password, confirmPassword } = req.body;
 
   if (role === "employer") {
     const employerExist = await Employer.findOne({
@@ -50,9 +42,7 @@ exports.signup = async (req, res) => {
   } else {
     const userExist = await User.findOne({ email: email });
     if (userExist) {
-      return res
-        .status(409)
-        .send({ message: "user with this email already exists" });
+      return res.status(409).send({ message: "user with this email already exists" });
     }
 
     if (password !== confirmPassword) {
@@ -87,19 +77,15 @@ exports.login = async (req, res) => {
   if (role === "employer") {
     const employerExist = await Employer.findOne({ email });
     if (!employerExist) {
-      return res
-        .status(404)
-        .send({ message: "we didn't find any employer with this email" });
+      return res.status(404).send({ message: "we didn't find any employer with this email" });
     }
 
     const passMatch = await bcrypt.compare(password, employerExist.password);
-    if (!passMatch)
-      return res.status(401).json({ message: "Invalid credentials" });
+    if (!passMatch) return res.status(401).json({ message: "Invalid credentials" });
 
     if (role !== employerExist.role) {
       res.status(401).json({
-        message:
-          "Permission denied: Your account does not hae access rights to this resource.",
+        message: "Permission denied: Your account does not hae access rights to this resource.",
       });
       return;
     }
@@ -117,19 +103,15 @@ exports.login = async (req, res) => {
   } else {
     const userExist = await User.findOne({ email });
     if (!userExist) {
-      return res
-        .status(404)
-        .send({ message: "we didn't find any user with this email" });
+      return res.status(404).send({ message: "we didn't find any user with this email" });
     }
 
     const passMatch = await bcrypt.compare(password, userExist.password);
-    if (!passMatch)
-      return res.status(401).json({ message: "Invalid credentials" });
+    if (!passMatch) return res.status(401).json({ message: "Invalid credentials" });
 
     if (role !== userExist.role) {
       res.status(401).json({
-        message:
-          "Permission denied: Your account does not hae access rights to this resource.",
+        message: "Permission denied: Your account does not hae access rights to this resource.",
       });
       return;
     }

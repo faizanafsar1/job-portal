@@ -1,21 +1,19 @@
-const jobCollection = require("../models/Job");
-const JobApplication = require("../models/JobApplication");
 const Job = require("../models/Job");
+const JobApplication = require("../models/JobApplication");
 const Employer = require("../models/Employer");
 
 exports.dashboardData = async (req, res) => {
   const userId = req.user.userId;
   const employer = await Employer.findById(userId);
 
-  const totalApplications = await JobApplication.find({
-    "jobDetails.companyEmail": employer.email,
-  }).countDocuments();
-  const applications = await JobApplication.find({
-    "jobDetails.companyEmail": employer.email,
-  });
-  const totalJobsPosted = await Job.find({
-    companyEmail: employer.email,
-  }).countDocuments();
-  const jobsPosted = await Job.find({ companyEmail: employer.email });
-  res.status(200).send({ totalApplications, applications, totalJobsPosted, jobsPosted });
+  const jobs = await Job.find({ companyEmail: employer.email });
+  const jobIds = jobs.map((job) => job._id);
+  const applications = await JobApplication.find({ jobId: { $in: jobIds } })
+    .populate("jobId")
+    .populate("userId");
+
+  const totalApplications = applications.length;
+  const totalJobsPosted = jobs.length;
+
+  res.status(200).send({ totalApplications, applications, totalJobsPosted, jobs });
 };
