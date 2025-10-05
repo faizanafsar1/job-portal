@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", require("./routes/ApplicationRoutes"));
 app.use("/", require("./routes/JobRoutes"));
 app.use("/", require("./routes/UserRoutes"));
-app.use("/", require("./routes/EmployerRoutes"));
+app.use("/", require("./routes/employerRoutes"));
 app.use("/", require("./routes/AuthRoutes"));
 
 app.listen(port, () => {
