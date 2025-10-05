@@ -1,12 +1,6 @@
 import { useState } from "react";
 import Icon from "../../components/Icon";
-import {
-  faUser,
-  faEnvelope,
-  faLock,
-  faEye,
-  faEyeSlash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faEnvelope, faLock, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -20,14 +14,8 @@ const SignUp = () => {
     role: yup.string(),
     firstName: yup.string().required("this field is required"),
     lastName: yup.string().required("this field is required"),
-    email: yup
-      .string()
-      .email("invalid email address")
-      .required("this field is required"),
-    password: yup
-      .string()
-      .min(8, "Password must be 8 characters long")
-      .required("this field is required"),
+    email: yup.string().email("invalid email address").required("this field is required"),
+    password: yup.string().min(8, "Password must be 8 characters long").required("this field is required"),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password")], "passwords do not match ")
@@ -73,16 +61,11 @@ const SignUp = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#f4f8fb]">
       <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-md border border-gray-100">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-1">
-          Sign Up
-        </h2>
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-1">Sign Up</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label
-              className="block text-xs font-medium text-gray-500 mb-1"
-              htmlFor="role"
-            >
+            <label className="block text-xs font-medium text-gray-500 mb-1" htmlFor="role">
               Signup as:
             </label>
             <div className="relative">
@@ -99,18 +82,13 @@ const SignUp = () => {
                   Select Role
                 </option>
                 <option value="jobseeker">Job Seeker</option>
-                <option value="employer">
-                  Employer (or Recruiter / Company)
-                </option>
+                <option value="employer">Employer (or Recruiter / Company)</option>
               </select>
             </div>
           </div>
           <div className="flex gap-2">
             <div>
-              <label
-                className="block text-xs font-medium text-gray-500 mb-1"
-                htmlFor="firstName"
-              >
+              <label className="block text-xs font-medium text-gray-500 mb-1" htmlFor="firstName">
                 First Name <span className="text-red-600">*</span>
               </label>
               <div className="relative">
@@ -126,16 +104,11 @@ const SignUp = () => {
                   className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-light bg-[#f4f8fb]"
                 />
               </div>
-              <span className="capitalize text-red-600 text-xs">
-                {errors.firstName?.message}
-              </span>
+              <span className="capitalize text-red-600 text-xs">{errors.firstName?.message}</span>
             </div>
 
             <div>
-              <label
-                className="block text-xs font-medium text-gray-500 mb-1"
-                htmlFor="lastName"
-              >
+              <label className="block text-xs font-medium text-gray-500 mb-1" htmlFor="lastName">
                 Last Name <span className="text-red-600">*</span>
               </label>
               <div className="relative">
@@ -151,17 +124,12 @@ const SignUp = () => {
                   className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-light bg-[#f4f8fb]"
                 />
               </div>
-              <span className="capitalize text-red-600 text-xs">
-                {errors.lastName?.message}
-              </span>
+              <span className="capitalize text-red-600 text-xs">{errors.lastName?.message}</span>
             </div>
           </div>
 
           <div>
-            <label
-              className="block text-xs font-medium text-gray-500 mb-1"
-              htmlFor="email"
-            >
+            <label className="block text-xs font-medium text-gray-500 mb-1" htmlFor="email">
               Email <span className="text-red-600">*</span>
             </label>
             <div className="relative">
@@ -177,16 +145,11 @@ const SignUp = () => {
                 className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-light bg-[#f4f8fb]"
               />
             </div>
-            <span className="capitalize text-red-600 text-xs">
-              {errors.email?.message}
-            </span>
+            <span className="capitalize text-red-600 text-xs">{errors.email?.message}</span>
           </div>
 
           <div>
-            <label
-              className="block text-xs font-medium text-gray-500 mb-1"
-              htmlFor="contact"
-            >
+            <label className="block text-xs font-medium text-gray-500 mb-1" htmlFor="contact">
               Contact <span className="text-red-600">*</span>
             </label>
             <div className="relative">
@@ -202,15 +165,10 @@ const SignUp = () => {
                 className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-light bg-[#f4f8fb]"
               />
             </div>
-            <span className="capitalize text-red-600 text-xs">
-              {errors.contact?.message}
-            </span>
+            <span className="capitalize text-red-600 text-xs">{errors.contact?.message}</span>
           </div>
           <div className="">
-            <label
-              className="block text-xs font-medium text-gray-500 mb-1"
-              htmlFor="password"
-            >
+            <label className="block text-xs font-medium text-gray-500 mb-1" htmlFor="password">
               Password <span className="text-red-600">*</span>
             </label>
             <div className="relative">
@@ -234,16 +192,11 @@ const SignUp = () => {
                 <Icon icon={showPassword ? faEyeSlash : faEye} size="sm" />
               </button>
             </div>
-            <span className="capitalize rounded-lg text-red-600 text-xs">
-              {errors.password?.message}
-            </span>
+            <span className="capitalize rounded-lg text-red-600 text-xs">{errors.password?.message}</span>
           </div>
 
           <div>
-            <label
-              className="block text-xs font-medium text-gray-500 mb-1"
-              htmlFor="confirmPassword"
-            >
+            <label className="block text-xs font-medium text-gray-500 mb-1" htmlFor="confirmPassword">
               Confirm Password <span className="text-red-600">*</span>
             </label>
             <div className="relative">
@@ -267,9 +220,7 @@ const SignUp = () => {
                 <Icon icon={showPassword ? faEyeSlash : faEye} size="sm" />
               </button>
             </div>
-            <span className="capitalize rounded-lg text-red-600 text-xs">
-              {errors.confirmPassword?.message}
-            </span>
+            <span className="capitalize rounded-lg text-red-600 text-xs">{errors.confirmPassword?.message}</span>
           </div>
 
           <Button style="primary" label="SignUp" className="w-full"></Button>
@@ -282,36 +233,24 @@ const SignUp = () => {
 
         <div className="space-y-3">
           <button className="w-full flex items-center justify-center gap-2 border border-gray-200 rounded-md py-2 bg-white hover:bg-gray-50 transition">
-            <span className="text-gray-700 text-sm font-medium">
-              Sign up with Google
-            </span>
+            <span className="text-gray-700 text-sm font-medium">Sign up with Google</span>
           </button>
           <button className="w-full flex items-center justify-center gap-2 border border-gray-200 rounded-md py-2 bg-white hover:bg-gray-50 transition">
-            <span className="text-gray-700 text-sm font-medium">
-              Sign up with Facebook
-            </span>
+            <span className="text-gray-700 text-sm font-medium">Sign up with Facebook</span>
           </button>
         </div>
 
         <p className="mt-4 text-sm text-center text-gray-500">
           Already have an account?
-          <a
-            href="/login"
-            className="text-primary-light cursor-pointer hover:underline"
-          >
+          <a href="/login" className="text-primary-light cursor-pointer hover:underline">
             Log in
           </a>
         </p>
         <p className="mt-4 text-xs text-center text-gray-400">
           By signing up to create an account I accept Company's
-          <span className="text-primary-light cursor-pointer hover:underline">
-            Terms of Use
-          </span>
+          <span className="text-primary-light cursor-pointer hover:underline">Terms of Use</span>
           and
-          <span className="text-primary-light cursor-pointer hover:underline">
-            Privacy Policy
-          </span>
-          .
+          <span className="text-primary-light cursor-pointer hover:underline">Privacy Policy</span>.
         </p>
       </div>
     </div>

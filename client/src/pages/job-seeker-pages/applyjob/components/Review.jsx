@@ -1,57 +1,116 @@
-import { faArrowLeft, faFile } from "@fortawesome/free-solid-svg-icons";
+import { faFile, faPencil } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../../../components/Button";
 import Icon from "../../../../components/Icon";
+import IconButton from "../../../../components/IconButton";
+import { useState } from "react";
+import { useUser } from "../../../../context/UserContext";
 
-export default function Review({ handleJobApply, nextStep, prevStep, userData }) {
+export default function Review({ handleJobApply, nextStep, userData }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const { handleSave } = useUser();
+  const [data, setData] = useState({
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    email: userData.email,
+    contact: userData.contact,
+    cityState: userData.cityState,
+    postal: userData.postal,
+  });
   return (
-    <div className="max-w-2xl  mx-auto p-4">
-      <Icon icon={faArrowLeft} onClick={prevStep} size="lg" className="my-5" />
+    <div className="shadow-lg max-w-3xl rounded-xl bg-white mx-auto p-8 md:p-10 border border-gray-200">
+      <h1 className="text-3xl font-bold mb-8 text-gray-800">Please review your application</h1>
 
-      <h1 className="text-2xl font-bold mb-8">Please review your application</h1>
-
-      <div className="mb-8">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-gray-600">Contact information</h2>
-          <button className="text-blue-600">Edit</button>
+      <div className="mb-10">
+        <div className="flex justify-between items-center mb-6 border-b pb-2">
+          <h2 className="text-lg font-semibold text-gray-700">Contact Information</h2>
+          {!isEditing ? (
+            <IconButton
+              icon={faPencil}
+              onClick={() => setIsEditing(!isEditing)}
+              size="lg"
+              className="text-primary-dark hover:text-primary transition"
+            />
+          ) : (
+            <div className="flex gap-2">
+              <Button
+                style="secondary"
+                label="Cancel"
+                onClick={() => {
+                  setData(userData);
+                  setIsEditing(false);
+                }}
+                size="sm"
+              />
+              <Button
+                style="primary"
+                label="Save"
+                onClick={() => {
+                  handleSave(data);
+                  setIsEditing(false);
+                }}
+                size="sm"
+              />
+            </div>
+          )}
         </div>
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm text-gray-600">Full Name</label>
-              <div className="mt-1 capitalize text-gray-900">
-                {userData.firstName} {userData.lastName}
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm text-gray-600">Email Address</label>
-              <div className="mt-1 text-gray-900">{userData.email}</div>
-            </div>
-            <div>
-              <label className="block text-sm text-gray-600">City, State</label>
-              <div className="mt-1 text-gray-900">{userData.address.cityState}</div>
-              <label className="block text-sm text-gray-600">Postal Code</label>
-              <div className="mt-1 text-gray-900">{userData.address.postal}</div>
-            </div>
-            <div>
-              <label className="block text-sm text-gray-600">Phone Number</label>
-              <div className="mt-1 text-gray-900">{userData.contact}</div>
-            </div>
-          </div>
+
+        <div className="space-y-6">
+          {!isEditing ? (
+            <InputAndLabel isEditing={isEditing} label="Full Name" value={`${data?.firstName} ${data?.lastName}`} />
+          ) : (
+            <>
+              <InputAndLabel
+                isEditing={isEditing}
+                onChange={(e) => setData({ ...data, firstName: e.target.value })}
+                label="First Name"
+                value={data?.firstName}
+              />
+              <InputAndLabel
+                onChange={(e) => setData({ ...data, lastName: e.target.value })}
+                isEditing={isEditing}
+                label="Last Name"
+                value={data?.lastName}
+              />
+            </>
+          )}
+          <InputAndLabel
+            onChange={(e) => setData({ ...data, email: e.target.value })}
+            isEditing={isEditing}
+            label="Email Address"
+            value={data?.email}
+          />
+          <InputAndLabel
+            onChange={(e) => setData({ ...data, contact: e.target.value })}
+            isEditing={isEditing}
+            label="Phone Number"
+            value={data?.contact}
+          />
+          <InputAndLabel
+            onChange={(e) => setData({ ...data, cityState: e.target.value })}
+            isEditing={isEditing}
+            label="City, State"
+            value={data?.address?.cityState}
+          />
+          <InputAndLabel
+            onChange={(e) => setData({ ...data, postal: e.target.value })}
+            isEditing={isEditing}
+            label="Postal Code"
+            value={data?.address?.postal}
+          />
         </div>
       </div>
 
       {/* CV Section */}
       <div className="mb-8">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-gray-600">CV</h2>
-          <button className="text-blue-600">Edit</button>
+          <h2 className="text-gray-600 text-lg font-semibold">Resume</h2>
         </div>
         <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
           <div className="flex items-center">
             <div className="bg-gray-100 p-2 rounded">
               <Icon icon={faFile} size="2xl" className="text-primary-dark" />
             </div>
-            <span className="ml-3 text-primary-dark">{userData.resume.filename?.split("-").splice(1).join("-")}</span>
+            <span className="ml-3 text-primary-dark">{userData?.resume.filename?.split("-").splice(1).join("-")}</span>
           </div>
         </div>
       </div>
@@ -100,6 +159,22 @@ export default function Review({ handleJobApply, nextStep, prevStep, userData })
           nextStep();
           handleJobApply();
         }}
+      />
+    </div>
+  );
+}
+
+function InputAndLabel({ label, value, isEditing, onChange }) {
+  return (
+    <div className="flex flex-col">
+      <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+      <input
+        onChange={onChange}
+        disabled={!isEditing}
+        className={`w-full  rounded-md border-gray-300 text-gray-900 text-sm px-3 py-2 shadow-sm focus:ring-2 focus:ring-primary-dark focus:border-primary-dark transition-all
+          ${!isEditing ? "bg-gray-100 cursor-not-allowed" : "bg-white border"} `}
+        type="text"
+        value={value}
       />
     </div>
   );

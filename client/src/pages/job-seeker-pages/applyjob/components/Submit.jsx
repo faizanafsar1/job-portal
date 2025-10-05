@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function Submit({ userData }) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 p-4">
+    <div className="flex flex-col items-center justify-center  p-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
         {/* Paper Airplane Icon */}
         <div className="flex justify-center mb-6">

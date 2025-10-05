@@ -1,18 +1,12 @@
 import { useState } from "react";
 import Icon from "../../components/Icon";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  faEnvelope,
-  faLock,
-  faEye,
-  faEyeSlash,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faLock, faEye, faEyeSlash, faUser } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../components/Button";
 import { useAuth } from "../../context/AuthContext";
 import { API } from "../../config/config";
 import PageLayout from "../../components/PageLayout";
-
+import { toast } from "react-toastify";
 const Login = () => {
   const navigate = useNavigate();
   const { setAccessToken } = useAuth();
@@ -36,9 +30,7 @@ const Login = () => {
       case "email":
         if (!value) {
           error = "Please enter your email";
-        } else if (
-          !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
-        ) {
+        } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) {
           error = "Invalid email format";
         }
         break;
@@ -75,35 +67,30 @@ const Login = () => {
         "Content-Type": "application/json",
       },
     });
-
+    const data = await res.json();
     if (res.ok) {
-      const data = await res.json();
       setAccessToken(data.accessToken);
 
       if (formData.role === "employer") {
-        navigate("/employer-dashboard");
+        navigate("/employer/dashboard");
       } else {
-        navigate("/profile");
+        navigate("/jobseeker/profile");
       }
-
-      alert(data.message);
+      toast.success(data.message);
+    } else {
+      toast.error(data.message);
     }
   };
 
   return (
-    <PageLayout>
+    <>
       <div className="flex items-center justify-center min-h-screen bg-[#f4f8fb]">
         <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-md border border-gray-100">
-          <h2 className="text-2xl font-bold text-center text-gray-800 mb-1">
-            Log In
-          </h2>
+          <h2 className="text-2xl font-bold text-center text-gray-800 mb-1">Log In</h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label
-                className="block text-xs font-medium text-gray-500 mb-1"
-                htmlFor="role"
-              >
+              <label className="block text-xs font-medium text-gray-500 mb-1" htmlFor="role">
                 Role <span className="text-red-600">*</span>
               </label>
               <div className="relative">
@@ -125,22 +112,13 @@ const Login = () => {
                     Select Role
                   </option>
                   <option value="jobseeker">Job Seeker</option>
-                  <option value="employer">
-                    Employer (or Recruiter / Company)
-                  </option>
+                  <option value="employer">Employer (or Recruiter / Company)</option>
                 </select>
               </div>
-              {errors.role && (
-                <span className="bg-red-50 text-red-600 text-xs">
-                  {errors.role}
-                </span>
-              )}
+              {errors.role && <span className="bg-red-50 text-red-600 text-xs">{errors.role}</span>}
             </div>
             <div>
-              <label
-                className="block text-xs font-medium text-gray-500 mb-1"
-                htmlFor="email"
-              >
+              <label className="block text-xs font-medium text-gray-500 mb-1" htmlFor="email">
                 Email <span className="text-red-600">*</span>
               </label>
               <div className="relative">
@@ -157,18 +135,11 @@ const Login = () => {
                   placeholder="Enter your email"
                 />
               </div>
-              {errors.email && (
-                <span className="bg-red-50 text-red-600 text-xs">
-                  {errors.email}
-                </span>
-              )}
+              {errors.email && <span className="bg-red-50 text-red-600 text-xs">{errors.email}</span>}
             </div>
 
             <div className="">
-              <label
-                className="block text-xs font-medium text-gray-500 mb-1"
-                htmlFor="password"
-              >
+              <label className="block text-xs font-medium text-gray-500 mb-1" htmlFor="password">
                 Password <span className="text-red-600">*</span>
               </label>
               <div className="relative">
@@ -193,11 +164,7 @@ const Login = () => {
                   <Icon icon={showPassword ? faEyeSlash : faEye} size="sm" />
                 </button>
               </div>
-              {errors.password && (
-                <span className="bg-red-50 p-1 rounded-lg text-red-600 text-xs">
-                  {errors.password}
-                </span>
-              )}
+              {errors.password && <span className="bg-red-50 p-1 rounded-lg text-red-600 text-xs">{errors.password}</span>}
             </div>
 
             <Button style="primary" label="Login" className="w-full"></Button>
@@ -211,40 +178,27 @@ const Login = () => {
 
           <div className="space-y-3">
             <button className="w-full flex items-center justify-center gap-2 border border-gray-200 rounded-md py-2 bg-white hover:bg-gray-50 transition">
-              <span className="text-gray-700 text-sm font-medium">
-                Continue with Google
-              </span>
+              <span className="text-gray-700 text-sm font-medium">Continue with Google</span>
             </button>
             <button className="w-full flex items-center justify-center gap-2 border border-gray-200 rounded-md py-2 bg-white hover:bg-gray-50 transition">
-              <span className="text-gray-700 text-sm font-medium">
-                Continue with Facebook
-              </span>
+              <span className="text-gray-700 text-sm font-medium">Continue with Facebook</span>
             </button>
           </div>
 
           <p className="mt-4 text-sm text-center text-gray-500">
             Don't have an account?{" "}
-            <Link
-              to="/signup"
-              className="text-primary-light cursor-pointer hover:underline"
-            >
+            <Link to="/signup" className="text-primary-light cursor-pointer hover:underline">
               Sign Up
             </Link>
           </p>
           <p className="mt-4 text-xs text-center text-gray-400">
             By loging in I accept Company's{" "}
-            <span className="text-primary-light cursor-pointer hover:underline">
-              Terms of Use
-            </span>{" "}
-            and{" "}
-            <span className="text-primary-light cursor-pointer hover:underline">
-              Privacy Policy
-            </span>
-            .
+            <span className="text-primary-light cursor-pointer hover:underline">Terms of Use</span> and{" "}
+            <span className="text-primary-light cursor-pointer hover:underline">Privacy Policy</span>.
           </p>
         </div>
       </div>
-    </PageLayout>
+    </>
   );
 };
 

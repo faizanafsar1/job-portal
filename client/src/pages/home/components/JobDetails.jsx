@@ -1,7 +1,4 @@
 import {
-  faCheckCircle,
-  faFile,
-  faGear,
   faBuilding,
   faMapMarkerAlt,
   faDollarSign,
@@ -10,51 +7,11 @@ import {
   faBriefcase,
   faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
-import Icon from "../../../../components/Icon";
-import Button from "../../../../components/Button";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-export default function ManageResumeForApply({ userData, nextStep, ...jobDetails }) {
-  return (
-    <div className="flex ">
-      <div className="flex-1 justify-items-center   bg-white ">
-        <div className="">
-          {!userData?.resume ? (
-            <h1 className="text-2xl font-semibold my-10">Add a resume for the employer</h1>
-          ) : (
-            <h1 className="text-2xl font-semibold my-10"></h1>
-          )}
-          <div className="rounded-lg shadow-lg min-w-96 border border-gray-400 p-4">
-            <div className="flex items-center mb-4">
-              <Icon icon={faFile} size="2xl" className="text-primary-dark mr-3" />
-              <div>
-                <h2 className="text-lg font-semibold">{userData?.resume?.filename?.split("-").slice(1).join("-")}</h2>
-
-                <p className="text-sm text-gray-500">
-                  Uploaded: &nbsp;
-                  {new Date(userData?.resume?.uploadedAt).toLocaleDateString()}
-                </p>
-              </div>
-              <Icon icon={faCheckCircle} size="xl" className="text-primary-dark ml-auto"></Icon>
-            </div>
-            <div className="h-72 border  border-gray-400 rounded-lg p-3">
-              <CVPreview
-                url={`https://docs.google.com/viewer?url=${encodeURIComponent(userData?.resume?.filepath)}&embedded=true`}
-              />
-            </div>
-          </div>
-          <div className="*:w-full mt-10">
-            <Button style="primary" label="Continue" onClick={nextStep}></Button>
-          </div>
-        </div>
-      </div>
-      <div className="  flex-1  ">
-        <JobDetails job={jobDetails} />
-      </div>
-    </div>
-  );
-}
-
+import Icon from "../../../components/Icon";
+import { Link, useNavigate } from "react-router-dom";
+import { API } from "../../../config/config";
+import { toast } from "react-toastify";
+import { useAuth } from "../../../context/AuthContext";
 function InfoCard({ icon, label, value, bgColor, iconColor }) {
   return (
     <div className={`flex items-center ${bgColor} rounded-lg p-3`}>
@@ -67,10 +24,25 @@ function InfoCard({ icon, label, value, bgColor, iconColor }) {
   );
 }
 
-function JobDetails({ job }) {
+export default function JobDetails({ job }) {
+  const { accessToken } = useAuth();
+  const navigate = useNavigate();
+  const handleApply = async () => {
+    const res = await fetch(`${API}/check-if-applied/${job._id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log(res);
+    if (res.ok) {
+      navigate(`/jobseeker/applyjob/${encodeURIComponent(job._id)}`);
+    } else {
+      toast.error("Already Applied");
+    }
+  };
   const getTypeColor = (type) => {
     if (type === "Full-time") return "bg-green-100 text-green-700";
-    if (type === "Part-time") return "bg-primary-dark/10 text-primary-dark"; // replaced blue
+    if (type === "Pa rt-time") return "bg-primary-dark/10 text-primary-dark"; // replaced blue
     return "bg-purple-100 text-purple-700";
   };
 
@@ -147,49 +119,16 @@ function JobDetails({ job }) {
             <span className="text-sm">{job.companyEmail}</span>
           </div>
         </div>
-      </div>
-    </div>
-  );
-}
 
-function CVPreview({ url }) {
-  const [isLoading, setIsLoading] = useState(true);
-  return (
-    <div className="h-72 relative">
-      <style>
-        {`
-          .cv-loading {
-            background: linear-gradient(90deg, #eee, #dddd, #eee);
-            background-size: 200% 100%;
-            animation: shimmer 1s infinite linear;
-          }
-
-          @keyframes shimmer {
-            0% { background-position: -300px 0; }
-            100% { background-position: 200px 0; }
-          }
-        `}
-      </style>
-      {isLoading && (
-        <div className="h-fit absolute inset-0 space-y-2.5  bg-white">
-          <span className="cv-loading h-5 w-5/6 bg-gray-300 block rounded-md"></span>
-          <span className="cv-loading h-5 w-4/5 bg-gray-300 block rounded-md"></span>
-          <span className="cv-loading h-5 w-3/4 bg-gray-300 block rounded-md"></span>
-          <span className="cv-loading h-5 w-3/4 bg-gray-300 block rounded-md"></span>
-          <span className="cv-loading h-5 w-3/4 bg-gray-300 block rounded-md"></span>
-          <span className="cv-loading h-5 w-3/4 bg-gray-300 block rounded-md"></span>
-          <span className="cv-loading h-5 w-3/5 bg-gray-300 block rounded-md"></span>
-          <span className="cv-loading h-5 w-3/4 bg-gray-300 block rounded-md"></span>
-          <span className="cv-loading h-5 w-5/6 bg-gray-300 block rounded-md"></span>
+        <div className="border-t border-gray-200 pt-6">
+          <button
+            onClick={() => handleApply()}
+            className="w-full bg-gradient-to-r from-primary-dark to-primary-light text-white font-semibold py-4 rounded-xl hover:from-primary-dark hover:to-primary-dark transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+          >
+            Apply Now
+          </button>
         </div>
-      )}
-      <iframe
-        src={url}
-        className="h-[90%] w-full"
-        style={{ border: "none", display: isLoading ? "none" : "block" }}
-        title="CV Preview"
-        onLoad={() => setIsLoading(false)}
-      />
+      </div>
     </div>
   );
 }

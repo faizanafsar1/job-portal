@@ -1,12 +1,9 @@
-import PageLayout from "../../components/PageLayout";
-import SearchSection from "./components/SearchSection";
-import JobsList from "./components/viewjobs/JobsList";
+import HeroSection from "./components/HeroSection";
 
 export default function Home() {
   return (
-    <PageLayout>
-      <SearchSection />
-      <JobsList />
-    </PageLayout>
+    <>
+      <HeroSection />
+    </>
   );
 }

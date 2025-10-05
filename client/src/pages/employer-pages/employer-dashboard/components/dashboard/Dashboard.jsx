@@ -8,7 +8,7 @@ export default function Dashboard() {
   if (!dashboardData) {
     return <div className=" flex items-center justify-center text-gray-500">Loading profile...</div>;
   }
-  const { applications, jobsPosted, totalApplications, totalJobsPosted } = dashboardData;
+  const { applications, jobs, totalApplications, totalJobsPosted } = dashboardData;
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen text-gray-800">
@@ -18,7 +18,7 @@ export default function Dashboard() {
       </div>
 
       <div className=" gap-6 mb-8">
-        <EmployerJobs jobsPosted={jobsPosted} />
+        <EmployerJobs jobsPosted={jobs} />
       </div>
 
       <Applicants applications={applications} />

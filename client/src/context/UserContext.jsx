@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthContext";
 import { API } from "../config/config";
+import { toast } from "react-toastify";
 
 const UserContext = createContext();
 export const UserProvider = ({ children }) => {
@@ -27,7 +28,7 @@ export const UserProvider = ({ children }) => {
     if (res.ok) {
       const data = await res.json();
       setUserData(data.updated);
-      alert(data.message);
+      toast.success(data.message);
     }
   };
 
@@ -45,11 +46,7 @@ export const UserProvider = ({ children }) => {
     handleToken();
   }, [accessToken]);
 
-  return (
-    <UserContext.Provider value={{ handleSave, userData, setUserData }}>
-      {children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={{ handleSave, userData, setUserData }}>{children}</UserContext.Provider>;
 };
 
 export const useUser = () => useContext(UserContext);

@@ -19,7 +19,7 @@ export default function Profile() {
     }, 1000);
   }
   return (
-    <PageLayout>
+    <>
       {!activeForm && <ProfileSection userData={userData} onEdit={setActiveForm} />}
       {activeForm === "EditGeneralInfo" && (
         <EditGeneralInfo existingData={userData} handleSave={handleSave} handleActiveForm={handleActiveForm} />
@@ -27,6 +27,6 @@ export default function Profile() {
       {activeForm === "EditEducation" && (
         <EditEducationInfo existingData={userData} handleSave={handleSave} handleActiveForm={handleActiveForm} />
       )}
-    </PageLayout>
+    </>
   );
 }

@@ -21,14 +21,9 @@ export function EmployerProvider({ children }) {
       });
       const data = await res.json();
       setDashboardData(data);
-      console.log(data);
     };
     handleData();
   }, [accessToken]);
-  return (
-    <EmployerContext.Provider value={dashboardData}>
-      {children}
-    </EmployerContext.Provider>
-  );
+  return <EmployerContext.Provider value={dashboardData}>{children}</EmployerContext.Provider>;
 }
 export const useEmployer = () => useContext(EmployerContext);

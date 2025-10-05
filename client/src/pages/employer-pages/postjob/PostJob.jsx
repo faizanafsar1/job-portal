@@ -54,38 +54,37 @@ export default function PostJob() {
   const steps = ["Job Basics", "Job Details", "Pay and Benefits", "Job Description", "Preferences", "Preview", "Job Posted"];
 
   return (
-    <PageLayout>
-      <div className="max-w-3xl min-h-screen  mx-auto p-6">
-        <div className="mb-6">
-          <div className="flex items-start gap-2 justify-between">
-            {steps.map((label, index) => (
-              <div key={index} className="flex-1 text-center">
-                <div
-                  className={`text-sm font-medium rounded-full w-8 h-8 mx-auto mb-1 flex items-center justify-center ${
-                    currentStep === index + 1 ? "bg-primary-dark text-white" : "bg-gray-300 text-gray-800"
-                  }`}
-                >
-                  {index + 1}
-                </div>
-                <div className={`text-xs ${currentStep === index + 1 ? "font-semibold text-primary-dark" : "text-gray-500"}`}>
-                  {label}
-                </div>
+    <div className="max-w-3xl min-h-screen  mx-auto p-6">
+      <div className="mb-6">
+        <div className="flex items-start gap-2 justify-between">
+          {steps.map((label, index) => (
+            <div key={index} className="flex-1 text-center">
+              <div
+                className={`text-sm font-medium rounded-full w-8 h-8 mx-auto mb-1 flex items-center justify-center ${
+                  currentStep === index + 1 ? "bg-primary-dark text-white" : "bg-gray-300 text-gray-800"
+                }`}
+              >
+                {index + 1}
               </div>
-            ))}
-          </div>
+              <div className={`text-xs ${currentStep === index + 1 ? "font-semibold text-primary-dark" : "text-gray-500"}`}>
+                {label}
+              </div>
+            </div>
+          ))}
         </div>
-        {currentStep === 1 && <JobBasics formData={formData} updateFormData={updateFormData} nextStep={nextStep} />}
-        {currentStep === 2 && (
-          <AddJobDetails formData={formData} updateFormData={updateFormData} nextStep={nextStep} prevStep={prevStep} />
-        )}
-        {currentStep === 3 && <AddPayAndBenefits updateFormData={updateFormData} nextStep={nextStep} prevStep={prevStep} />}
-        {currentStep === 4 && (
-          <AddJobDescription formData={formData} updateFormData={updateFormData} nextStep={nextStep} prevStep={prevStep} />
-        )}
-        {currentStep === 5 && (
-          <SetPreferences formData={formData} updateFormData={updateFormData} nextStep={nextStep} prevStep={prevStep} />
-        )}
-        {/* {currentStep === 6 && (
+      </div>
+      {currentStep === 1 && <JobBasics formData={formData} updateFormData={updateFormData} nextStep={nextStep} />}
+      {currentStep === 2 && (
+        <AddJobDetails formData={formData} updateFormData={updateFormData} nextStep={nextStep} prevStep={prevStep} />
+      )}
+      {currentStep === 3 && <AddPayAndBenefits updateFormData={updateFormData} nextStep={nextStep} prevStep={prevStep} />}
+      {currentStep === 4 && (
+        <AddJobDescription formData={formData} updateFormData={updateFormData} nextStep={nextStep} prevStep={prevStep} />
+      )}
+      {currentStep === 5 && (
+        <SetPreferences formData={formData} updateFormData={updateFormData} nextStep={nextStep} prevStep={prevStep} />
+      )}
+      {/* {currentStep === 6 && (
           <PreScreenApplicants
             formData={formData}
             updateFormData={updateFormData}
@@ -93,9 +92,8 @@ export default function PostJob() {
             prevStep={prevStep}
           />
         )} */}
-        {currentStep === 6 && <JobPreview nextStep={nextStep} prevStep={prevStep} formData={formData} sendData={sendData} />}
-        {currentStep === 7 && <JobPosted />}
-      </div>
-    </PageLayout>
+      {currentStep === 6 && <JobPreview nextStep={nextStep} prevStep={prevStep} formData={formData} sendData={sendData} />}
+      {currentStep === 7 && <JobPosted />}
+    </div>
   );
 }

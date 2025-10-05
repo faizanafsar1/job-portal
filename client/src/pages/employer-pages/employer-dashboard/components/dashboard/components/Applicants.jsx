@@ -1,6 +1,19 @@
-import { faFileAlt, faSyncAlt, faSearch, faFilter, faUserCircle, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFileAlt,
+  faSyncAlt,
+  faSearch,
+  faFilter,
+  faUserCircle,
+  faChevronRight,
+  faUsers,
+  faUser,
+  faEye,
+  faInfoCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import Icon from "../../../../../../components/Icon";
-export default function Applicants({ applications }) {
+import IconAndLabelBtn from "../../../../../../components/IconLabelAndBtn";
+import { Link } from "react-router-dom";
+export default function Applicants({ applications = [] }) {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
@@ -26,15 +39,19 @@ export default function Applicants({ applications }) {
         ))}
       </div>
 
-      <button className="mt-4 flex items-center text-primary-dark hover:text-primary-dark/80 font-medium">
+      <Link
+        to={"/employer/view-all-applicants"}
+        className="mt-4 flex items-center text-primary-dark hover:text-primary-dark/80 font-medium"
+      >
         View all applicants <Icon icon={faChevronRight} className="ml-1" />
-      </button>
+      </Link>
     </div>
   );
 }
 
 function ApplicantCard({ application }) {
-  const { userDetails, jobDetails } = application;
+  console.log("application", application);
+  const { userId, jobId, _id } = application;
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-4 p-4 border-b hover:bg-gray-50 rounded-lg">
       <div className="md:col-span-2">
@@ -44,21 +61,21 @@ function ApplicantCard({ application }) {
           </div>
           <div>
             <div className="font-medium">
-              {userDetails.firstName} {userDetails.lastName}
+              {userId?.firstName} {userId?.lastName}
             </div>
-            <div className="text-sm text-gray-500">{userDetails.email}</div>
+            <div className="text-sm text-gray-500">{userId?.email}</div>
           </div>
         </div>
       </div>
 
       <div>
-        <div className="text-sm font-medium">{jobDetails.jobTitle}</div>
-        <div className="text-xs text-gray-500">{userDetails?.yearsExperience} experience</div>
+        <div className="text-sm font-medium">{jobId?.jobTitle}</div>
+        {userId.yearsExperience && <div className="text-xs text-gray-500">{userId?.yearsExperience} experience</div>}
       </div>
 
       <div>
         <div className="flex flex-wrap gap-1 mb-2">
-          <span className="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">{userDetails?.skill}</span>
+          <span className="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-800">{userId?.skill}</span>
         </div>
       </div>
 
@@ -66,12 +83,9 @@ function ApplicantCard({ application }) {
         <div className="flex items-center"></div>
 
         <div className="flex space-x-2 justify-end">
-          <button className="text-primary-dark hover:text-primary-dark/80 p-1">
-            <Icon icon={faFileAlt} title="View Resume" />
-          </button>
-          <button className="text-green-600 hover:text-green-900 p-1">
-            <Icon icon={faSyncAlt} title="Change Status" />
-          </button>
+          <Link to={`/employer/applicant-details/${_id}`}>
+            <IconAndLabelBtn icon={faFileAlt} className={"text-primary-dark"} label={"View Details"}></IconAndLabelBtn>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,12 +1,6 @@
 import Icon from "./Icon";
 
-export default function IconAndLabelBtn({
-  label,
-  type,
-  onClick,
-  icon,
-  className,
-}) {
+export default function IconAndLabelBtn({ label, type, onClick, icon, className }) {
   return (
     <button
       onClick={onClick}
