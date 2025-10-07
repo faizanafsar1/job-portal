@@ -49,9 +49,9 @@ const SignUp = () => {
       setAccessToken(data.accessToken);
 
       if (formData.role === "employer") {
-        navigate("/employer-dashboard");
+        navigate("/employer/dashboard");
       } else {
-        navigate("/profile");
+        navigate("/jobseeker/profile");
       }
 
       alert(data.message);
