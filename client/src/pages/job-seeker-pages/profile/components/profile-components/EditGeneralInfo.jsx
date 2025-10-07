@@ -91,13 +91,13 @@ const EditGeneralInfo = ({ handleSave, handleActiveForm, existingData }) => {
               className="h-5 w-5 text-black border-gray-300 rounded focus:ring-black"
             />
             <label htmlFor="show-number" className="ml-2 block text-sm text-gray-900 font-medium">
-              Show my number on Indeed
+              Show my number on Talento
             </label>
           </div>
           <p className="text-xs text-gray-500">
             By submitting the form with this box checked, you confirm that you are the primary user and subscriber to the
             telephone number provided, and you agree to receive calls (including using artificial or pre-recorded voice), texts,
-            and WhatsApp messages from Indeed and employers who use Indeed at the telephone number provided above.
+            and WhatsApp messages from Talento and employers who use Talento at the telephone number provided above.
           </p>
         </div>
 
@@ -187,7 +187,7 @@ const EditGeneralInfo = ({ handleSave, handleActiveForm, existingData }) => {
 
       <footer className="text-center mt-12 text-xs text-gray-500">
         <p>
-          ©2025 Indeed -
+          ©2025 Talento -
           <a href="#" className="underline">
             Cookies
           </a>

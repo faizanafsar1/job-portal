@@ -140,8 +140,8 @@ export default function Review({ handleJobApply, nextStep, userData }) {
           </li>
           <li>
             Consent to your application being transmitted to the employer
-            <span className="italic"> (Indeed does not guarantee receipt)</span>, and processed & analyzed in accordance with both
-            the employer’s and Indeed’s terms & privacy policies.
+            <span className="italic"> (Talento does not guarantee receipt)</span>, and processed & analyzed in accordance with
+            both the employer’s and Talento’s terms & privacy policies.
           </li>
           <li>
             Acknowledge that applying to jobs outside your country may involve sending your personal data to countries with lower

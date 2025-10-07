@@ -20,15 +20,15 @@ export default function Footer() {
             Help
           </a>
           <a href="#" className="hover:text-blue-600">
-            ESG at Indeed
+            ESG at Talento
           </a>
         </div>
 
         {/* Right Section */}
         <div className="flex flex-wrap gap-4">
-          <span>© 2025 Indeed</span>
+          <span>© 2025 Talento</span>
           <a href="#" className="hover:text-blue-600">
-            Accessibility at Indeed
+            Accessibility at Talento
           </a>
           <a href="#" className="hover:text-blue-600">
             Privacy Center and Ad Choices

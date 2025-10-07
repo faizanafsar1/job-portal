@@ -34,7 +34,7 @@ export default function JobPreview({ nextStep, prevStep, formData, sendData }) {
 
       <p className="text-sm text-gray-800">
         By selecting Confirm, you agree that this job post reflects your requirements, and agree it will be posted and
-        applications will be processed following Indeed's Terms, Cookie, and Privacy Policies.
+        applications will be processed following Talento's Terms, Cookie, and Privacy Policies.
       </p>
       <div className="ml-auto w-fit">
         <Button

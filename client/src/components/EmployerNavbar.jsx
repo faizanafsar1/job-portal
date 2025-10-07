@@ -14,7 +14,7 @@ const EmployerNavbar = () => {
     <nav className="w-full   px-6 py-4 shadow-md">
       <div className="max-w-screen-xl mx-auto flex justify-between items-center">
         <Link to={"/"} className="text-xl text-primary-dark font-bold">
-          Indeed
+          Talento
         </Link>
         <div className="flex space-x-4">
           {navItems.map((item, i) => (

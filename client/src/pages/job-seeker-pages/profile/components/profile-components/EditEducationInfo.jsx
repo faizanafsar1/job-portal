@@ -90,7 +90,7 @@ const EditEducationInfo = ({ handleActiveForm, existingData, handleSave }) => {
         {existingData.skill ? null : <AddItem title="Add Skill" onClick={() => setActiveModal("Skill")} />}
 
         <footer className="text-center text-xs text-gray-400 mt-8">
-          ©2025 Indeed –{" "}
+          ©2025 Talento –{" "}
           <a href="#" className="underline">
             Cookies, Privacy and Terms
           </a>

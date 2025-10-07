@@ -34,7 +34,7 @@ export default function ProfileSection({ onEdit, userData }) {
               <span>{userData?.contact}</span>
             </div>
           )}
-          {userData?.address && (
+          {userData?.address?.streetAddress && (
             <div className="flex items-center gap-2">
               <Icon icon={faMapMarkerAlt} size="sm" className="text-gray-600" />
               <span>{userData?.address?.streetAddress}</span>
@@ -59,7 +59,7 @@ export default function ProfileSection({ onEdit, userData }) {
         </div>
 
         <footer className="text-center text-xs text-gray-400 mt-10">
-          ©2025 Indeed -
+          ©2025 Talento -
           <a href="#" className="underline">
             Cookies, Privacy and Terms
           </a>

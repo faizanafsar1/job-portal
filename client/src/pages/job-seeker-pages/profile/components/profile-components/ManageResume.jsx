@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useUser } from "../../../../../context/UserContext";
 import { useAuth } from "../../../../../context/AuthContext";
 import ResumeModal from "./ResumeModal";
+import { toast } from "react-toastify";
 
 export default function ManageResume() {
   const [activeModal, setActiveModal] = useState(null);
@@ -41,7 +42,7 @@ export default function ManageResume() {
     });
 
     const data = await res.json();
-    alert(data.message);
+    toast.success(data.message);
     if (res.ok) {
       handleSave({ resume: undefined });
     }
@@ -61,10 +62,12 @@ export default function ManageResume() {
       <ResumeModal handleSave={handleSave} activeModal={activeModal} handleCloseModal={handleCloseModal} />
       {userData?.resume ? (
         <div className="  flex items-center gap-3 p-4 border rounded-md bg-gray-50">
-          <Icon icon={faFileAlt} size="2xl" className="text-blue-600" />
+          <Icon icon={faFileAlt} size="2xl" className="text-primary-dark" />
           <div>
             <p className="font-medium">{userData.resume.filename?.split("-").slice(1).join("-")}</p>
-            <p className="text-sm text-gray-500">Added {new Date(userData.resume.uploadedAt).toLocaleDateString()}</p>
+            {userData.resume && (
+              <p className="text-sm text-gray-500">Added {new Date(userData?.resume?.uploadedAt).toLocaleDateString()}</p>
+            )}
           </div>
           <div ref={dropDownRef} className="relative ml-auto">
             <IconButton icon={faEllipsis} onClick={() => setIsOpen(!isOpen)} size="xl" className="ml-auto" />
