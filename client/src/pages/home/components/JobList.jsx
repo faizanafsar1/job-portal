@@ -60,9 +60,10 @@ function JobCard({ job, isSelected, onClick }) {
 export default function JobList({ jobs, selectedJob, onSelectJob }) {
   return (
     <div className="w-1/3 space-y-4 overflow-y-auto">
-      {jobs.map((job) => (
-        <JobCard key={job._id} job={job} isSelected={selectedJob?.id === job.id} onClick={() => onSelectJob(job)} />
-      ))}
+      {jobs &&
+        jobs?.map((job) => (
+          <JobCard key={job?._id} job={job} isSelected={selectedJob?.id === job?.id} onClick={() => onSelectJob(job)} />
+        ))}
     </div>
   );
 }

@@ -72,12 +72,12 @@ export default function HeroSection() {
   const [filterType, setFilterType] = useState("all");
   const [filterLocation, setFilterLocation] = useState("all");
 
-  const filteredJobs = jobsData.filter((job) => {
+  const filteredJobs = jobsData?.filter((job) => {
     const matchesSearch =
-      job.jobTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.companyName.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesType = filterType === "all" || job.jobType === filterType;
-    const matchesLocation = filterLocation === "all" || job.jobLocationType === filterLocation;
+      job?.jobTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      job?.companyName.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesType = filterType === "all" || job?.jobType === filterType;
+    const matchesLocation = filterLocation === "all" || job?.jobLocationType === filterLocation;
     return matchesSearch && matchesType && matchesLocation;
   });
 
