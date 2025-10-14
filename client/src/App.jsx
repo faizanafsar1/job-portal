@@ -15,6 +15,7 @@ import ApplicantDetails from "./pages/employer-pages/applicant-detail/ApplicantD
 import ApplicantsPage from "./pages/employer-pages/applicants-page/AllApplicants";
 import EditJobDetails from "./pages/employer-pages/edit-job-details/EditJobDetails";
 import MyJobsPage from "./pages/employer-pages/my-jobs/MyJobs";
+import AIResumeWriter from "./pages/job-seeker-pages/ai-resume/AIResume";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
       <Route path="/" element={<PageLayout />}>
         <Route path="" element={<Home />}></Route>
         <Route path="login" element={<Login />}></Route>
+        <Route path="/ai" element={<AIResumeWriter />}></Route>
         <Route path="signup" element={<SignUp />}></Route>
       </Route>
     </Routes>
