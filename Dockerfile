@@ -14,7 +14,7 @@ RUN npm install --production
 COPY server/. .
 
 # Step 6 — Expose backend port
-EXPOSE 3000
+EXPOSE 5000
 
 # Step 7 — Set environment
 ENV NODE_ENV=production
